@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img">
+  <defs>
+    <linearGradient id="bge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8F9F8"/>
+      <stop offset="100%" stop-color="#DBE2DC"/>
+    </linearGradient>
+    <linearGradient id="mxe" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#99A2AA"/>
+      <stop offset="14%" stop-color="#EDF1F4"/>
+      <stop offset="33%" stop-color="#BCC4CB"/>
+      <stop offset="53%" stop-color="#F8FAFC"/>
+      <stop offset="75%" stop-color="#B0B9C0"/>
+      <stop offset="100%" stop-color="#8C959D"/>
+    </linearGradient>
+    <linearGradient id="mye" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="34%" stop-color="#D2D9DF"/>
+      <stop offset="70%" stop-color="#ACB5BD"/>
+      <stop offset="100%" stop-color="#8A939B"/>
+    </linearGradient>
+    <linearGradient id="kre" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#9C7743"/>
+      <stop offset="20%" stop-color="#DCBC91"/>
+      <stop offset="50%" stop-color="#C6A275"/>
+      <stop offset="80%" stop-color="#D8B78B"/>
+      <stop offset="100%" stop-color="#8F6C3C"/>
+    </linearGradient>
+    <linearGradient id="bande" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4F9A78"/>
+      <stop offset="100%" stop-color="#2F6E51"/>
+    </linearGradient>
+    <radialGradient id="she" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#0B0D10" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#0B0D10" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bge)"/>
+  <circle cx="400" cy="392" r="296" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="400" cy="626" rx="216" ry="32" fill="url(#she)"/>
+  <g>
+    
+    <g transform="rotate(-7 400 506)" opacity="0.75">
+      <rect x="250" y="402" width="300" height="208" rx="4" fill="url(#mye)" stroke="#8B949C" stroke-width="2"/>
+    </g>
+    
+    <g transform="rotate(-2.5 400 480)" opacity="0.88">
+      <rect x="250" y="376" width="300" height="208" rx="4" fill="url(#mye)" stroke="#8B949C" stroke-width="2"/>
+    </g>
+    
+    <g transform="rotate(2.5 400 452)" opacity="1">
+      <rect x="250" y="348" width="300" height="208" rx="4" fill="url(#mye)" stroke="#8B949C" stroke-width="2"/>
+    </g>
+    <!-- lifted top sheet with crease highlights -->
+    <g transform="rotate(-9 400 380)">
+      <path d="M250 292 L550 276 L556 470 L256 486 Z" fill="url(#mxe)" stroke="#8B949C" stroke-width="2"/>
+      <path d="M296 286 L312 478" stroke="#FFFFFF" stroke-width="3" opacity="0.65"/>
+      <path d="M382 281 L394 474" stroke="#9EA7AE" stroke-width="2.5" opacity="0.6"/>
+      <path d="M468 277 L482 470" stroke="#FFFFFF" stroke-width="3" opacity="0.55"/>
+    </g>
+  </g></svg>

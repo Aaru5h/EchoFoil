@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img">
+  <defs>
+    <linearGradient id="bgd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8F9F8"/>
+      <stop offset="100%" stop-color="#DBE2DC"/>
+    </linearGradient>
+    <linearGradient id="mxd" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#99A2AA"/>
+      <stop offset="14%" stop-color="#EDF1F4"/>
+      <stop offset="33%" stop-color="#BCC4CB"/>
+      <stop offset="53%" stop-color="#F8FAFC"/>
+      <stop offset="75%" stop-color="#B0B9C0"/>
+      <stop offset="100%" stop-color="#8C959D"/>
+    </linearGradient>
+    <linearGradient id="myd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="34%" stop-color="#D2D9DF"/>
+      <stop offset="70%" stop-color="#ACB5BD"/>
+      <stop offset="100%" stop-color="#8A939B"/>
+    </linearGradient>
+    <linearGradient id="krd" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#9C7743"/>
+      <stop offset="20%" stop-color="#DCBC91"/>
+      <stop offset="50%" stop-color="#C6A275"/>
+      <stop offset="80%" stop-color="#D8B78B"/>
+      <stop offset="100%" stop-color="#8F6C3C"/>
+    </linearGradient>
+    <linearGradient id="bandd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4F9A78"/>
+      <stop offset="100%" stop-color="#2F6E51"/>
+    </linearGradient>
+    <radialGradient id="shd" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#0B0D10" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#0B0D10" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bgd)"/>
+  <circle cx="400" cy="400" r="296" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="400" cy="588" rx="206" ry="32" fill="url(#shd)"/>
+  <g>
+    <!-- outer wall, rim (wide) down to base (narrow) -->
+    <path d="M244 352 L296 536 A 104 28 0 0 0 504 536 L556 352 Z"
+          fill="url(#mxd)" stroke="#8B949C" stroke-width="2" stroke-linejoin="round"/>
+    <!-- corrugated flutes following the taper -->
+    <path d="M266.3 352 L310.9 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M288.6 352 L325.7 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M310.9 352 L340.6 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M333.1 352 L355.4 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M355.4 352 L370.3 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M377.7 352 L385.1 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M400.0 352 L400.0 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M422.3 352 L414.9 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M444.6 352 L429.7 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M466.9 352 L444.6 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M489.1 352 L459.4 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M511.4 352 L474.3 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/><path d="M533.7 352 L489.1 532.0" stroke="#9EA7AE" stroke-width="2.5" opacity="0.5"/>
+    <!-- interior, then the rolled rim on top of it -->
+    <ellipse cx="400" cy="352" rx="146" ry="38" fill="url(#myd)" opacity="0.9"/>
+    <ellipse cx="400" cy="352" rx="156" ry="44" fill="none" stroke="#8B949C" stroke-width="7"/>
+    <ellipse cx="400" cy="352" rx="156" ry="44" fill="none" stroke="#F2F5F7" stroke-width="3.5"/>
+    <path d="M303.28 320.32 A 156 44 0 0 1 453.04 310.64" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.85"/>
+  </g></svg>

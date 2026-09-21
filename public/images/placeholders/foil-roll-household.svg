@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800" role="img">
+  <defs>
+    <linearGradient id="bga" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8F9F8"/>
+      <stop offset="100%" stop-color="#DBE2DC"/>
+    </linearGradient>
+    <linearGradient id="mxa" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#99A2AA"/>
+      <stop offset="14%" stop-color="#EDF1F4"/>
+      <stop offset="33%" stop-color="#BCC4CB"/>
+      <stop offset="53%" stop-color="#F8FAFC"/>
+      <stop offset="75%" stop-color="#B0B9C0"/>
+      <stop offset="100%" stop-color="#8C959D"/>
+    </linearGradient>
+    <linearGradient id="mya" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="34%" stop-color="#D2D9DF"/>
+      <stop offset="70%" stop-color="#ACB5BD"/>
+      <stop offset="100%" stop-color="#8A939B"/>
+    </linearGradient>
+    <linearGradient id="kra" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#9C7743"/>
+      <stop offset="20%" stop-color="#DCBC91"/>
+      <stop offset="50%" stop-color="#C6A275"/>
+      <stop offset="80%" stop-color="#D8B78B"/>
+      <stop offset="100%" stop-color="#8F6C3C"/>
+    </linearGradient>
+    <linearGradient id="banda" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4F9A78"/>
+      <stop offset="100%" stop-color="#2F6E51"/>
+    </linearGradient>
+    <radialGradient id="sha" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#0B0D10" stop-opacity="0.26"/>
+      <stop offset="100%" stop-color="#0B0D10" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bga)"/>
+  <circle cx="400" cy="372" r="296" fill="#ffffff" opacity="0.55"/>
+  <ellipse cx="400" cy="650" rx="236" ry="32" fill="url(#sha)"/>
+  <g>
+    <!-- exposed roll end, drawn first so the carton overlaps it -->
+    <ellipse cx="516.48" cy="385.04" rx="23.52" ry="80.39999999999999" fill="url(#mya)" stroke="#8B949C" stroke-width="2"/>
+    <ellipse cx="516.48" cy="385.04" rx="7.840000000000001" ry="26.8" fill="#A9B2BA"/>
+
+    <!-- carton body -->
+    <path d="M288 296 L484 296 L484 564 L288 564 Z" fill="url(#banda)"/>
+    <path d="M288 296 L320.48 272.48 L516.48 272.48 L484 296 Z" fill="#4F9A78" opacity="0.82"/>
+    <path d="M484 296 L516.48 272.48 L516.48 540.48 L484 564 Z" fill="#2F6E51"/>
+
+    <!-- brushed-metal window across the label -->
+    <rect x="288" y="435.36" width="196" height="53.6" fill="url(#mxa)" opacity="0.9"/>
+
+    <path d="M374.4 363.0 A 15.5 15.5 0 0 1 374.4 389.8" fill="none" stroke="#EAF3EE" stroke-width="4.6" stroke-linecap="round" opacity="0.95"/><path d="M378.3 356.3 A 23.2 23.2 0 0 1 378.3 396.5" fill="none" stroke="#EAF3EE" stroke-width="4.6" stroke-linecap="round" opacity="0.76"/><path d="M382.1 349.6 A 31.0 31.0 0 0 1 382.1 403.2" fill="none" stroke="#EAF3EE" stroke-width="4.6" stroke-linecap="round" opacity="0.57"/>
+
+    <path d="M298 564 l11 13 l11 -13 M320 564 l11 13 l11 -13 M342 564 l11 13 l11 -13 M364 564 l11 13 l11 -13 M386 564 l11 13 l11 -13 M408 564 l11 13 l11 -13 M430 564 l11 13 l11 -13 M452 564 l11 13 l11 -13" fill="none" stroke="#8B949C" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M288 296 L288 564" stroke="#20402F" stroke-width="2" opacity="0.35"/>
+  </g></svg>

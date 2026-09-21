@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 112 100" role="img" aria-hidden="true" fill="currentColor">
+  <!-- Reversed E: three bars -->
+  <rect x="0" y="0" width="34" height="15" rx="1"/>
+  <rect x="0" y="42.5" width="34" height="15" rx="1"/>
+  <rect x="0" y="85" width="34" height="15" rx="1"/>
+  <!-- Reversed E spine: the inner echo arc -->
+  <path d="M26 0 C 52 18, 52 82, 26 100 L 40 100 C 66 82, 66 18, 40 0 Z"/>
+  <!-- F spine: the outer echo arc -->
+  <path d="M50 0 C 76 18, 76 82, 50 100 L 64 100 C 90 82, 90 18, 64 0 Z"/>
+  <!-- F bars -->
+  <rect x="62" y="0" width="50" height="15" rx="1"/>
+  <rect x="70" y="42.5" width="42" height="15" rx="1"/>
+</svg>

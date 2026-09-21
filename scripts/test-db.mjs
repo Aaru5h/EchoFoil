@@ -1,0 +1,13 @@
+import EmbeddedPostgres from 'embedded-postgres';
+import {mkdtemp,writeFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {randomBytes} from 'node:crypto';
+const directory=await mkdtemp(join(tmpdir(),'echofoil-pg-'));
+const password=randomBytes(24).toString('hex');
+const pg=new EmbeddedPostgres({databaseDir:directory,user:'echofoil',password,port:55439,persistent:false,postgresFlags:['-h','127.0.0.1'],onLog:()=>{},onError:()=>{}});
+await pg.initialise();await pg.start();await pg.createDatabase('echofoil_test');
+await writeFile('/tmp/echofoil-test-env',`DATABASE_URL=postgresql://echofoil:${password}@127.0.0.1:55439/echofoil_test\nAUTH_SECRET=${randomBytes(32).toString('hex')}\nNEXT_PUBLIC_SITE_URL=http://127.0.0.1:3001\nADMIN_EMAIL=admin@example.test\nADMIN_PASSWORD=${randomBytes(12).toString('hex')}Aa9\n`,{mode:0o600});
+console.log('Disposable PostgreSQL ready on 127.0.0.1:55439. Credentials saved to /tmp/echofoil-test-env.');
+process.on('SIGTERM',async()=>{await pg.stop();process.exit(0);});process.on('SIGINT',async()=>{await pg.stop();process.exit(0);});
+setInterval(()=>{},60_000);
