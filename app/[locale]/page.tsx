@@ -1,21 +1,13 @@
 import Image from "next/image";
-import {
-  ArrowUpRight,
-  ArrowRight,
-  Truck,
-  Layers,
-  MoveHorizontal,
-  Package,
-  MessageCircle,
-} from "lucide-react";
+import { ArrowUpRight, ArrowRight, Mail, Phone } from "lucide-react";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/lib/i18n/navigation";
-import { getProducts, getCategories, getPosts } from "@/lib/catalog";
+import { getProducts, getCategories, getPosts, getSettings } from "@/lib/catalog";
 import { messages } from "@/lib/messages";
 import { metadata } from "@/lib/seo";
-import type { Locale } from "@/lib/config";
-import { resolveImage, productPlaceholders } from "@/lib/images";
-import { ProductCard, FoilHelper } from "@/components/product/products";
+import { defaultPriceTiers, type Locale } from "@/lib/config";
+import { resolveImage, photos } from "@/lib/images";
+import { ProductTable, FoilHelper } from "@/components/product/products";
 import { Newsletter } from "@/components/layout/shell";
 export const revalidate = 300;
 export async function generateMetadata({ params }: { params: Promise<{ locale: Locale }> }) {
@@ -23,211 +15,239 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: L
   const m = messages(locale);
   return metadata(locale, "", m.heroTitle, m.heroText);
 }
+const fill = (s: string, vars: Record<string, string | number>) =>
+  s.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ""));
+/** "11–14" or "11" when every product in the group shares one value. */
+function range(values: number[]) {
+  const v = values.filter((n) => n > 0);
+  if (!v.length) return null;
+  const lo = Math.min(...v);
+  const hi = Math.max(...v);
+  return lo === hi ? `${lo}` : `${lo}–${hi}`;
+}
 export default async function Home({ params }: { params: Promise<{ locale: Locale }> }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const m = messages(locale);
-  const [products, categories, posts] = await Promise.all([
+  const [products, categories, posts, settings] = await Promise.all([
     getProducts(),
     getCategories(),
     getPosts(),
+    getSettings(),
   ]);
+  const featured = products.filter((p) => p.featured).slice(0, 6);
+  const guidePhotos = [photos.meal, photos.dough];
   return (
     <main id="main">
-      <div className="container">
-        <section className="hero">
-          <div>
-            <h1>{m.heroTitle}</h1>
-            <p>{m.heroText}</p>
-            <div className="hero-actions">
-              <Link className="btn" href="/shop">
-                {m.shopNow}
-                <ArrowRight size={18} />
-              </Link>
-              <Link className="btn secondary" href="/wholesale">
-                {m.requestQuote}
-              </Link>
-            </div>
-          </div>
-          <div className="hero-stage">
-            <Image
-              src={productPlaceholders.household.src}
-              alt={m.images.householdRoll}
-              width={640}
-              height={640}
-              priority
-              sizes="(max-width: 600px) 85vw, 45vw"
-            />
-            <span className="hero-caption">{m.heroCaption}</span>
-          </div>
-        </section>
-        <div className="trust-row">
-          <span>
-            <Truck size={19} />
-            {m.delivery}
-          </span>
-          <span>
-            <Layers size={19} />
-            {m.bulk}
-          </span>
-          <span>
-            <Package size={19} />
-            {m.paymentTrust}
-          </span>
-        </div>
-        <section className="section">
-          <div className="section-head">
-            <h2>{m.categoriesTitle}</h2>
-            <Link className="link row" href="/shop">
-              {m.viewAll}
-              <ArrowUpRight size={17} />
+      <section className="hero">
+        <Image src={photos.heroFoil} alt="" fill priority sizes="100vw" className="hero-photo" />
+        <div className="container hero-copy">
+          <h1>{m.heroTitle}</h1>
+          <p>{m.heroText}</p>
+          <div className="hero-actions">
+            <Link className="btn" href="/shop">
+              {m.shopNow}
+              <ArrowRight size={18} />
+            </Link>
+            <Link className="btn on-dark" href="/wholesale">
+              {m.requestQuote}
             </Link>
           </div>
-          <div className="grid4">
-            {categories.map((c) => (
-              <Link href={`/shop/${locale === "sq" ? c.slugSq : c.slug}`} className="category-card" key={c.id}>
-                <div className="image-stage">
-                  <Image
-                    src={resolveImage(c.image)}
-                    alt={c.translations[locale].name}
-                    width={400}
-                    height={400}
-                    sizes="(max-width: 800px) 45vw, 25vw"
-                  />
-                </div>
-                <h3>
-                  {c.translations[locale].name}
-                  <ArrowUpRight size={18} />
-                </h3>
-                <p className="small muted">{c.translations[locale].description}</p>
-              </Link>
-            ))}
+        </div>
+      </section>
+      <ul className="facts container">
+        <li>{m.delivery}</li>
+        <li>{m.bulk}</li>
+        <li>{m.paymentTrust}</li>
+      </ul>
+
+      <div className="container">
+        <section className="section">
+          <header className="section-head">
+            <h2>{m.rangeTitle}</h2>
+            <p>{m.rangeText}</p>
+          </header>
+          <div className="range">
+            {categories.map((c) => {
+              const items = products.filter((p) => p.categoryId === c.id);
+              const vs = items.map((p) => p.variants[0]).filter(Boolean);
+              const width = range(vs.map((v) => v.width));
+              const thick = range(vs.map((v) => v.thicknessMicrons));
+              return (
+                <Link
+                  href={`/shop/${locale === "sq" ? c.slugSq : c.slug}`}
+                  className="range-tile"
+                  key={c.id}
+                >
+                  <div className="range-photo">
+                    <Image
+                      src={resolveImage(c.image)}
+                      alt=""
+                      fill
+                      sizes="(max-width: 600px) 50vw, 25vw"
+                    />
+                  </div>
+                  <h3>
+                    {c.translations[locale].name}
+                    <ArrowUpRight size={18} aria-hidden="true" />
+                  </h3>
+                  <dl>
+                    {width && (
+                      <div>
+                        <dt>{m.widthShort}</dt>
+                        <dd>{width} cm</dd>
+                      </div>
+                    )}
+                    {thick && (
+                      <div>
+                        <dt>{m.thicknessShort}</dt>
+                        <dd>{thick} µm</dd>
+                      </div>
+                    )}
+                    <div>
+                      <dt>{m.productsLabel}</dt>
+                      <dd>{items.length}</dd>
+                    </div>
+                  </dl>
+                </Link>
+              );
+            })}
           </div>
         </section>
+
         <section className="section" style={{ paddingTop: 0 }}>
-          <div className="section-head">
+          <header className="section-head">
             <h2>{m.featuredTitle}</h2>
             <Link href="/shop" className="link">
               {m.viewAll}
             </Link>
-          </div>
-          <div className="grid4">
-            {products
-              .filter((p) => p.featured)
-              .slice(0, 4)
-              .map((p) => (
-                <ProductCard key={p.id} product={p} />
-              ))}
-          </div>
+          </header>
+          <ProductTable products={featured} />
         </section>
-      </div>
-      <section className="why section">
-        <div className="container">
-          <div className="section-head">
-            <h2>{m.whyTitle}</h2>
-            <p className="muted" style={{ maxWidth: 440 }}>
-              {m.whyText}
-            </p>
-          </div>
-          <div className="grid4">
-            {[
-              { Icon: Layers, title: m.benefit1, text: m.benefit1Text },
-              { Icon: MoveHorizontal, title: m.benefit2, text: m.benefit2Text },
-              { Icon: Package, title: m.benefit3, text: m.benefit3Text },
-              { Icon: MessageCircle, title: m.benefit4, text: m.benefit4Text },
-            ].map(({ Icon, title, text }) => (
-              <div className="benefit" key={title}>
-                <Icon size={28} />
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <div className="container">
-        <section className="section">
+
+        <section className="section finder-section">
           <FoilHelper />
         </section>
-        <section className="wholesale-banner">
-          <div>
-            <h2>{m.wholesaleTitle}</h2>
-            <p>{m.wholesaleText}</p>
-            <Link className="btn" href="/wholesale">
-              {m.requestQuote}
-              <ArrowUpRight size={18} />
-            </Link>
-          </div>
-          <Image
-            src={productPlaceholders.wholesale.src}
-            alt={m.images.bulkRoll}
-            width={600}
-            height={400}
-            sizes="(max-width: 600px) 90vw, 40vw"
-          />
-        </section>
-        <section className="stats">
-          {[
-            [String(products.length), m.statsProducts],
-            ["2", m.statsMarkets],
-            ["2", m.statsMethods],
-          ].map(([n, l]) => (
-            <div key={l}>
-              <strong>{n}</strong>
-              <span className="muted small">{l}</span>
-            </div>
-          ))}
-        </section>
-        <section className="testimonial">
-          <h2>{m.testimonialsTitle}</h2>
-          <p className="muted">{m.testimonialsText}</p>
-        </section>
+      </div>
+
+      <section className="business">
+        <div className="business-photo">
+          <Image src={photos.chef} alt="" fill sizes="(max-width: 800px) 100vw, 50vw" />
+        </div>
+        <div className="business-copy">
+          <h2>{m.businessTitle}</h2>
+          <p>{m.businessText}</p>
+          <table className="tiers">
+            <caption>{m.tiersTitle}</caption>
+            <tbody>
+              <tr>
+                <th scope="row">{fill(m.tierUnits, { qty: 1 })}</th>
+                <td>{m.tierBase}</td>
+              </tr>
+              {defaultPriceTiers.map((tier) => (
+                <tr key={tier.minQty}>
+                  <th scope="row">{fill(m.tierUnits, { qty: tier.minQty })}</th>
+                  <td>{fill(m.tierOff, { pct: tier.discountPct })}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <Link className="btn on-dark-solid" href="/wholesale">
+            {m.requestQuote}
+            <ArrowRight size={18} />
+          </Link>
+          {(settings.email || settings.phone) && (
+            <p className="business-contact">
+              {settings.phone && (
+                <a href={`tel:${settings.phone}`}>
+                  <Phone size={15} />
+                  {settings.phone}
+                </a>
+              )}
+              {settings.email && (
+                <a href={`mailto:${settings.email}`}>
+                  <Mail size={15} />
+                  {settings.email}
+                </a>
+              )}
+            </p>
+          )}
+        </div>
+      </section>
+
+      <div className="container">
         <section className="section">
-          <div className="section-head">
-            <h2>{m.blog}</h2>
+          <header className="section-head">
+            <h2>{m.processTitle}</h2>
+            <p>{m.processText}</p>
+          </header>
+          <ol className="process">
+            {m.process.map((s) => (
+              <li key={s.title}>
+                <h3>{s.title}</h3>
+                <p>{s.text}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="section" style={{ paddingTop: 0 }}>
+          <header className="section-head">
+            <h2>{m.guidesTitle}</h2>
             <Link href="/blog" className="link">
               {m.allGuides}
             </Link>
-          </div>
-          <div className="grid3">
-            {posts.slice(0, 3).map((p) => (
+          </header>
+          <div className="guides">
+            {posts.slice(0, 3).map((p, i) => (
               <article className="guide" key={p.id}>
                 <Link href={`/blog/${locale === "sq" ? p.slugSq : p.slug}`}>
-                  <Image
-                    src={resolveImage(p.image)}
-                    alt={p.translations[locale].name}
-                    width={480}
-                    height={320}
-                    sizes="(max-width: 600px) 90vw, 30vw"
-                  />
+                  <div className="guide-photo">
+                    <Image
+                      src={guidePhotos[i] ?? resolveImage(p.image)}
+                      alt=""
+                      fill
+                      sizes="(max-width: 800px) 100vw, 33vw"
+                    />
+                  </div>
                   <h3>{p.translations[locale].name}</h3>
                   <p>{p.translations[locale].description}</p>
-                  <span className="link">{m.readGuide}</span>
                 </Link>
               </article>
             ))}
           </div>
         </section>
-        <section className="section" style={{ paddingTop: 0 }}>
-          <div className="section-head">
-            <h2>{m.faq}</h2>
+
+        <section className="section faq-block" style={{ paddingTop: 0 }}>
+          <header className="section-head">
+            <h2>{m.faqTitle}</h2>
             <Link href="/faq" className="link">
-              {m.viewAll}
+              {m.faq}
             </Link>
+          </header>
+          <div>
+            {m.faqs.slice(0, 5).map((f) => (
+              <details className="faq-item" key={f.q}>
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
           </div>
-          {m.faqs.slice(0, 4).map((f) => (
-            <details className="faq-item" key={f.q}>
-              <summary>{f.q}</summary>
-              <p>{f.a}</p>
-            </details>
-          ))}
         </section>
+
         <section className="final-cta">
           <div>
-            <h2>{m.finalTitle}</h2>
-            <Link href="/shop" className="link">
-              {m.shopNow}
-            </Link>
+            <h2>{m.contactTitle}</h2>
+            <p className="muted">{m.contactText}</p>
+            <div className="row wrap">
+              <Link href="/contact" className="btn">
+                {m.contact}
+                <ArrowRight size={18} />
+              </Link>
+              <Link href="/wholesale" className="btn secondary">
+                {m.requestQuote}
+              </Link>
+            </div>
           </div>
           <div>
             <p className="muted">{m.newsletterText}</p>

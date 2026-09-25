@@ -55,9 +55,7 @@ export default async function Product({ params }: Props) {
     notFound();
   }
   const expected = locale === "sq" ? p.slugSq : p.slug;
-  console.log("[PROBE]", JSON.stringify({locale, slug, expected, willRedirect: slug !== expected}));
   if (slug !== expected) permanentRedirect(`/${locale}/product/${expected}`);
-  console.log("[PROBE-AFTER] execution continued past redirect");
   const m = messages(locale);
   const tr = p.translations[locale];
   const reviews = demoMode
@@ -98,7 +96,7 @@ export default async function Product({ params }: Props) {
               <p>{a.body}</p>
             </details>
           ))}
-          <details className="faq-item">
+          <details className="faq-item" open>
             <summary>{m.specifications}</summary>
             <table className="table">
               <tbody>

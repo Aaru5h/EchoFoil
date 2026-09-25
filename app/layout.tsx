@@ -29,12 +29,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={locale} suppressHydrationWarning>
       <body className={`${inter.variable} ${sora.variable}`}>
         <span hidden data-design-contract="4e800934">
-          THESIS: Everyday materials presented with precise specifications. OWN-WORLD: Green
-          owner-supplied mark, cool white, silver stages and echo rings. STORY: Choose a product or
-          request a business quote. FIRST VIEWPORT: Large left headline, two clear actions and a
-          right foil stage; product-first mobile flow. FORM: Pinned original brief and handoff;
-          code-led implementation under delegated decisions. FINISH: unreviewed and undocumented is
-          unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every
+          THESIS: A foil producer catalogue: real material photography and products read by width,
+          length and thickness; refuses the illustrated lifestyle shop. OWN-WORLD: Cool paper,
+          graphite ink and dark fields, aluminium-grey rules, square 2px corners, brand green as the
+          single accent, Sora and Inter. STORY: See the range by spec, compare in a spec table, find
+          the right thickness, buy or request a business quote. FIRST VIEWPORT: Full-bleed dark
+          crumpled-foil photo, large white headline bottom-left, green shop button and white-outline
+          quote button. FORM: Pinned by client references (unopack, symetal, firstalu, politan);
+          code-led; second pass after owner called v1 AI slop. FINISH: unreviewed and undocumented
+          is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every
           shipping raster carrying its provenance
         </span>
         {children}

@@ -24,16 +24,16 @@
   "skip": "Kaloni te përmbajtja",
   "announcement": "Pak më shumë kujdes, në derën tuaj. Dërgesa falas mbi 50 €.",
   "dismiss": "Mbyllni njoftimin",
-  "heroTitle": "Gjërat e mira meritojnë mbështjellje më të mirë.",
-  "heroText": "Nga përgatitja te pjata e fundit. Letër alumini, tava dhe produkte kuzhine për shtëpi e biznese në Kosovë dhe Shqipëri.",
-  "shopNow": "Zbuloni produktet e përditshme",
-  "requestQuote": "Kërkoni ofertë me shumicë",
+  "heroTitle": "Folie alumini, tava dhe letër pjekjeje për Kosovën dhe Shqipërinë",
+  "heroText": "Role për shtëpi, gjerësi për katering, enë alumini dhe letër pjekjeje. Çdo produkt me gjerësinë, gjatësinë dhe trashësinë, me copë ose me kuti.",
+  "shopNow": "Bli folie dhe tava",
+  "requestQuote": "Kërko ofertë për biznes",
   "heroCaption": "Materiale të thjeshta. Shumë mundësi.",
   "delivery": "Dërgesa në Kosovë dhe Shqipëri",
   "bulk": "Më shumë rrotulla. Çmim më i mirë.",
   "paymentTrust": "Pagesë në dorëzim ose me transfer bankar",
   "categoriesTitle": "Një vend në çdo kuzhinë.",
-  "featuredTitle": "Gati për recetën tuaj të radhës.",
+  "featuredTitle": "Më të zgjedhurat",
   "viewAll": "Shikoni të gjitha produktet",
   "whyTitle": "Detajet bëjnë ndryshimin.",
   "whyText": "Gjerësia e duhur. Gjatësia e duhur. Mbështetje për rutinën tuaj të përditshme.",
@@ -238,7 +238,7 @@
   "aboutText": "EchoFoil sjell letër alumini dhe produkte praktike paketimi për kuzhina shtëpiake e profesionale në Kosovë dhe Shqipëri. Përqendrohemi te specifikimet e qarta, formatet praktike dhe porositja e thjeshtë.",
   "sustainability": "Përdorni me kujdes. Pakësoni mbetjet.",
   "sustainabilityText": "Zgjidhni madhësinë e nevojshme dhe shmangni prerjet e panevojshme. Kontrolloni rregullat lokale për aluminin e pastër; mundësitë e riciklimit ndryshojnë. Nuk bëjmë pretendime certifikimi përtej informacionit të konfirmuar për çdo produkt.",
-  "contactText": "Na tregoni çfarë ju nevojitet dhe ekipi ynë do t’ju përgjigjet.",
+  "contactText": "Pyetje për një madhësi, një dorëzim apo një porosi më të madhe. Na shkruani dhe ju përgjigjet një person.",
   "businessPending": "Të dhënat e biznesit janë duke u konfirmuar. Përdorni formularin pasi dyqani të lidhet.",
   "legalDraft": "Politikë draft: pronari duhet të konfirmojë identitetin ligjor, kontaktet dhe kushtet para publikimit.",
   "required": "Ju lutemi plotësoni këtë fushë.",
@@ -320,11 +320,62 @@
     ]
   },
   "images": {
-    "householdRoll": "Rrotull alumini shtëpiak",
-    "cateringRoll": "Rrotull alumini profesional",
-    "bulkRoll": "Rrotull alumini me shumicë",
-    "tray": "Tavë alumini",
-    "sheets": "Fletë alumini të prera",
-    "bakingPaper": "Rrotull letre pjekjeje"
-  }
+    "householdRoll": "Folie alumini nga afër",
+    "cateringRoll": "Ushqim që gatuhet në tava alumini",
+    "bulkRoll": "Një tavë ushqimi e mbuluar me folie alumini",
+    "tray": "Enë alumini me një vakt të përgatitur",
+    "sheets": "Fletë alumini",
+    "bakingPaper": "Pasta mbi letër pjekjeje"
+  },
+  "rangeTitle": "Gama e produkteve",
+  "rangeText": "Katër familje produktesh për kuzhina shtëpiake, restorante, furra dhe katering.",
+  "viewRange": "Shiko gamën",
+  "widthShort": "Gjerësia",
+  "lengthShort": "Gjatësia",
+  "thicknessShort": "Trashësia",
+  "finderTitle": "Gjeni trashësinë e duhur",
+  "finderText": "Çdo folie që shesim, e vendosur në një shkallë sipas trashësisë në mikronë. Zgjidhni për çfarë gatuani dhe ne ju sugjerojmë ku të filloni.",
+  "finderLight": "Mbështjellje e lehtë",
+  "finderHeavy": "Përdorim i rëndë",
+  "finderScale": "Produktet e folies sipas trashësisë në mikronë",
+  "processTitle": "Si prodhohet folia e aluminit",
+  "processText": "Çdo rol folie alumini kalon të njëjtën rrugë para se të arrijë në sirtarin e kuzhinës ose në restorant.",
+  "businessTitle": "Për restorante, furra, katering dhe dyqane",
+  "businessText": "Blini me kuti me çmime sipas sasisë, ose na dërgoni sasitë mujore dhe vendin e dorëzimit dhe ne ju përgjigjemi me një ofertë me shkrim.",
+  "tiersTitle": "Çmime sipas sasisë për çdo produkt",
+  "tierUnits": "{qty}+ copë",
+  "tierOff": "{pct}% zbritje",
+  "tierBase": "Çmimi i listuar",
+  "contactTitle": "Na tregoni çfarë ju nevojitet",
+  "guidesTitle": "Udhëzues",
+  "faqTitle": "Pyetje",
+  "process": [
+    {
+      "title": "Derdhja",
+      "text": "Alumini i shkrirë derdhet në pllaka të trasha ose në shirit të vazhdueshëm."
+    },
+    {
+      "title": "Petëzimi",
+      "text": "Shiriti kalon disa herë nëpër cilindra derisa bëhet më i hollë se një fije floku."
+    },
+    {
+      "title": "Pjekja",
+      "text": "Trajtimi me nxehtësi e zbut folien që të paloset dhe të formohet lehtë."
+    },
+    {
+      "title": "Prerja",
+      "text": "Rolet e gjera priten sipas gjerësisë dhe mbështillen sërish në gjatësi të caktuara."
+    },
+    {
+      "title": "Paketimi",
+      "text": "Rolet, tavat dhe fletët paketohen dhe etiketohen me specifikimet e tyre."
+    },
+    {
+      "title": "Dorëzimi",
+      "text": "EchoFoil dorëzon në shtëpi dhe biznese në Kosovë dhe Shqipëri."
+    }
+  ],
+  "productsLabel": "Produkte",
+  "product": "Produkti",
+  "addShort": "Shto"
 }

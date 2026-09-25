@@ -17,8 +17,10 @@ import {
   Moon,
   ArrowUp,
   MessageCircle,
-  X,
   ArrowUpRight,
+  Truck,
+  Phone,
+  Mail,
 } from "lucide-react";
 import { Link, useRouter } from "@/lib/i18n/navigation";
 import { brandImages, resolveImage } from "@/lib/images";
@@ -48,13 +50,15 @@ export function Shell({
   const t = useTranslations();
   const locale = useLocale() as Locale;
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
+  const { theme: storedTheme, setTheme } = useTheme();
+  // The server can't know the stored theme; render "system" until mounted to keep hydration stable.
+  const [mounted, setMounted] = useState(false);
+  const theme = mounted ? storedTheme : "system";
   const { data: session } = useSession();
   const cart = useCart();
   const router = useRouter();
   const [nav, setNav] = useState(false);
   const [search, setSearch] = useState(false);
-  const [announcement, setAnnouncement] = useState(true);
   const [progress, setProgress] = useState(0);
   const [compact, setCompact] = useState(false);
   const other = locale === "sq" ? "en" : "sq";
@@ -68,6 +72,7 @@ export function Shell({
   if (category && pathname.includes("/shop/"))
     otherPath = `/${other}/shop/${other === "sq" ? category.slugSq : category.slug}`;
   useEffect(() => {
+    setMounted(true);
     const scroll = () => {
       const h = document.documentElement.scrollHeight - innerHeight;
       setProgress(h ? (scrollY / h) * 100 : 0);
@@ -82,9 +87,6 @@ export function Shell({
       }
     };
     addEventListener("keydown", key);
-    try {
-      setAnnouncement(sessionStorage.getItem("echofoil-announcement") !== "dismissed");
-    } catch {}
     return () => {
       removeEventListener("scroll", scroll);
       removeEventListener("keydown", key);
@@ -96,21 +98,29 @@ export function Shell({
         {t("skip")}
       </a>
       <div className="scroll-progress" style={{ width: `${progress}%` }} />
-      {announcement && settings.announcement && (
-        <div className="announcement">
-          {t("announcement")}
-          <button
-            className="icon-btn"
-            aria-label={t("dismiss")}
-            onClick={() => {
-              setAnnouncement(false);
-              sessionStorage.setItem("echofoil-announcement", "dismissed");
-            }}
-          >
-            <X size={14} />
-          </button>
+      <div className="utility">
+        <div className="container utility-inner">
+          <span className="row hide-small">
+            <Truck size={14} />
+            {t("delivery")}
+          </span>
+          {settings.announcement && <span className="announcement">{t("announcement")}</span>}
+          <span className="row">
+            {settings.phone && (
+              <a href={`tel:${settings.phone}`} className="row" style={{ gap: 6 }}>
+                <Phone size={14} />
+                {settings.phone}
+              </a>
+            )}
+            {settings.email && (
+              <a href={`mailto:${settings.email}`} className="row" style={{ gap: 6 }}>
+                <Mail size={14} />
+                {settings.email}
+              </a>
+            )}
+          </span>
         </div>
-      )}
+      </div>
       <header className={`header ${compact ? "compact" : ""}`}>
         <div className="container header-inner">
           <button
@@ -192,14 +202,13 @@ export function Shell({
                 <span className="count">{cart.items.reduce((n, i) => n + i.quantity, 0)}</span>
               )}
             </button>
+            <Link className="btn header-quote" href="/wholesale">
+              {t("requestQuote")}
+            </Link>
           </div>
         </div>
       </header>
-      {preview && (
-        <div className="container small muted" style={{ paddingTop: 8 }}>
-          {t("preview")}
-        </div>
-      )}
+      {preview && <div className="preview-note">{t("preview")}</div>}
       <Modal title={t("menu")} open={nav} onOpenChange={setNav} sheet>
         <nav className="stack">
           {["shop", "wholesale", "about", "contact", "faq", "blog", "account"].map((p) => (

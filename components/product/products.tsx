@@ -11,6 +11,17 @@ import type { CatalogProduct } from "@/lib/catalog-data";
 import { useCart } from "@/components/cart/provider";
 import { Stepper, Modal } from "@/components/ui/primitives";
 import { unitPrice } from "@/lib/pricing";
+type Variant = CatalogProduct["variants"][number];
+/** Spec cells for a variant; zero means "not applicable" in the catalog (trays have no length). */
+export function specCells(v: Variant, t: (key: string) => string) {
+  return (
+    [
+      [t("widthShort"), v.width, "cm"],
+      [t("lengthShort"), v.length, "m"],
+      [t("thicknessShort"), v.thicknessMicrons, "µm"],
+    ] as const
+  ).filter(([, n]) => n > 0);
+}
 export function ProductCard({ product: p }: { product: CatalogProduct }) {
   const t = useTranslations();
   const locale = useLocale() as Locale;
@@ -19,13 +30,14 @@ export function ProductCard({ product: p }: { product: CatalogProduct }) {
   if (!v) return null;
   return (
     <article className="product-card">
+      <span className="sku">{v.sku}</span>
       <button
         className="icon-btn heart"
         aria-label={`${t("saveProduct")} ${p.translations[locale].name}`}
         aria-pressed={c.wishlist.includes(p.id)}
         onClick={() => c.toggleWish(p.id)}
       >
-        <Heart size={18} fill={c.wishlist.includes(p.id) ? "currentColor" : "none"} />
+        <Heart size={17} fill={c.wishlist.includes(p.id) ? "currentColor" : "none"} />
       </button>
       <Link href={`/product/${locale === "sq" ? p.slugSq : p.slug}`}>
         <div className="image-stage">
@@ -38,9 +50,16 @@ export function ProductCard({ product: p }: { product: CatalogProduct }) {
           />
         </div>
         <h3>{p.translations[locale].name}</h3>
-        <div className="small muted">
-          {v.width} cm · {v.length} m · {v.thicknessMicrons} μm
-        </div>
+        <dl className="spec">
+          {specCells(v, t).map(([label, n, unit]) => (
+            <div key={label}>
+              <dt>{label}</dt>
+              <dd>
+                {n} {unit}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </Link>
       <div className="price-row">
         <div className="price">{formatPrice(v.price, locale)}</div>
@@ -53,56 +72,155 @@ export function ProductCard({ product: p }: { product: CatalogProduct }) {
           <Plus size={20} />
         </button>
       </div>
-      <span className="small muted">{t(v.stock > 0 ? "inStock" : "outOfStock")}</span>
+      <span className={`stock ${v.stock > 0 ? "" : "out"}`}>
+        {t(v.stock > 0 ? "inStock" : "outOfStock")}
+      </span>
     </article>
   );
 }
+/** Catalogue-style spec table: the reference sites list products by spec, not as cards. */
+export function ProductTable({ products }: { products: CatalogProduct[] }) {
+  const t = useTranslations();
+  const locale = useLocale() as Locale;
+  const c = useCart();
+  const cell = (n: number, unit: string) => (n > 0 ? `${n} ${unit}` : "—");
+  return (
+    <table className="spec-table">
+      <thead>
+        <tr>
+          <th scope="col">{t("product")}</th>
+          <th scope="col">{t("widthShort")}</th>
+          <th scope="col">{t("lengthShort")}</th>
+          <th scope="col">{t("thicknessShort")}</th>
+          <th scope="col">{t("price")}</th>
+          <th scope="col">
+            <span className="sr-only">{t("addToCart")}</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {products.map((p) => {
+          const v = p.variants[0];
+          if (!v) return null;
+          const name = p.translations[locale].name;
+          return (
+            <tr key={p.id}>
+              <td>
+                <Link
+                  href={`/product/${locale === "sq" ? p.slugSq : p.slug}`}
+                  className="st-product"
+                >
+                  <Image src={resolveImage(p.images[0]?.src)} alt="" width={96} height={96} />
+                  <span>
+                    <strong>{name}</strong>
+                    <small>{v.sku}</small>
+                  </span>
+                </Link>
+              </td>
+              <td data-label={t("widthShort")}>{cell(v.width, "cm")}</td>
+              <td data-label={t("lengthShort")}>{cell(v.length, "m")}</td>
+              <td data-label={t("thicknessShort")}>{cell(v.thicknessMicrons, "µm")}</td>
+              <td className="st-price">{formatPrice(v.price, locale)}</td>
+              <td>
+                <button
+                  className="btn secondary st-add"
+                  aria-label={`${t("addToCart")} ${name}`}
+                  disabled={v.stock < 1}
+                  onClick={() => c.add(v.id)}
+                >
+                  <Plus size={16} />
+                  {t("addShort")}
+                </button>
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}
+// ponytail: square-root scale so the crowded 10–20 µm foils don't overlap.
+const pos = (um: number) => `${Math.sqrt(um / 90) * 100}%`;
 export function FoilHelper() {
   const t = useTranslations();
   const c = useCart();
   const locale = useLocale() as Locale;
   const [choice, setChoice] = useState("household");
+  // Only foil has a meaningful thickness; baking paper is listed as 0 µm.
+  const foils = c.products.filter((p) => (p.variants[0]?.thicknessMicrons ?? 0) > 0);
   const p = c.products.find((p) => p.categoryId === choice);
+  const groups = new Map<number, typeof foils>();
+  for (const f of foils) {
+    const um = f.variants[0].thicknessMicrons;
+    groups.set(um, [...(groups.get(um) ?? []), f]);
+  }
   return (
-    <div className="helper">
+    <div className="finder">
       <div>
-        <h2>{t("helperTitle")}</h2>
-        <p className="muted">{t("helperText")}</p>
-        <div className="helper-options">
+        <h2>{t("finderTitle")}</h2>
+        <p className="muted">{t("finderText")}</p>
+        <div className="finder-options" role="group" aria-label={t("helperText")}>
           {[
             ["household", "homeUse"],
             ["professional", "businessUse"],
-            ["baking", "bakingUse"],
+            ["trays", "bakingUse"],
           ].map(([id, label]) => (
-            <button
-              className="btn secondary"
-              key={id}
-              aria-pressed={choice === id}
-              onClick={() => setChoice(id)}
-            >
+            <button key={id} aria-pressed={choice === id} onClick={() => setChoice(id)}>
               {t(label)}
             </button>
           ))}
         </div>
       </div>
-      {p && (
-        <Link className="helper-result" href={`/product/${locale === "sq" ? p.slugSq : p.slug}`}>
-          <Image
-            src={resolveImage(p.images[0]?.src)}
-            width={180}
-            height={180}
-            alt={p.translations[locale].name}
-          />
-          <div>
-            <span className="small muted">{t("recommended")}</span>
-            <h3>{p.translations[locale].name}</h3>
-            <span className="row small">
-              {p.variants[0].width} cm · {p.variants[0].thicknessMicrons} μm{" "}
-              <ArrowRight size={16} />
+      <div className="scale">
+        <div className="scale-track" role="img" aria-label={t("finderScale")}>
+          <div className="scale-axis" />
+          {[0, 10, 20, 40, 60, 90].map((n) => (
+            <span className="scale-tick" key={n} style={{ left: pos(n) }}>
+              {n}
             </span>
-          </div>
-        </Link>
-      )}
+          ))}
+          {[...groups].map(([um, items]) => {
+            const on = items.some((f) => f.categoryId === choice);
+            const best = items.some((f) => f.id === p?.id);
+            return (
+              <span
+                key={um}
+                className={`scale-mark ${on ? "on" : ""} ${best ? "best" : ""}`}
+                style={{ left: pos(um) }}
+                title={items.map((f) => f.translations[locale].name).join(", ")}
+              >
+                <span>{um}</span>
+                <i style={{ height: (on ? 36 : 14) + items.length * 16 }} />
+              </span>
+            );
+          })}
+        </div>
+        <div className="scale-legend">
+          <span>{t("finderLight")}</span>
+          <span>µm</span>
+          <span>{t("finderHeavy")}</span>
+        </div>
+        {p && (
+          <Link className="helper-result" href={`/product/${locale === "sq" ? p.slugSq : p.slug}`}>
+            <Image
+              src={resolveImage(p.images[0]?.src)}
+              width={160}
+              height={160}
+              alt={p.translations[locale].name}
+            />
+            <div>
+              <span className="small muted">{t("recommended")}</span>
+              <h3>{p.translations[locale].name}</h3>
+              <span className="small">
+                {specCells(p.variants[0], t)
+                  .map(([, n, unit]) => `${n} ${unit}`)
+                  .join(" × ")}
+              </span>
+            </div>
+            <ArrowRight size={20} />
+          </Link>
+        )}
+      </div>
     </div>
   );
 }

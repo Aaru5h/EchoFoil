@@ -19,7 +19,10 @@ export type ManagedImage = {
   altFallback: string;
 };
 
-const PLACEHOLDER = "/images/placeholders";
+// ponytail: Unsplash-licensed stand-ins (origin embedded in each JPEG) until the owner
+// supplies real EchoFoil product photography. The old SVG illustrations stay in
+// /images/placeholders for reference.
+const PHOTOS = "/images/photos";
 const BRAND = "/images/brand";
 
 export const brandImages = {
@@ -32,48 +35,76 @@ export const brandImages = {
   markStacked: `${BRAND}/echofoil-mark-stacked.jpeg`,
 } as const;
 
+export const photos = {
+  heroFoil: `${PHOTOS}/foil-dark.jpg`,
+  chef: `${PHOTOS}/chef-kitchen.jpg`,
+  dough: `${PHOTOS}/dough-baking-paper.jpg`,
+  meal: `${PHOTOS}/meal-trays-2.jpg`,
+} as const;
+
 export const productPlaceholders = {
   household: {
-    src: `${PLACEHOLDER}/foil-roll-household.svg`,
-    width: 800,
-    height: 800,
+    src: `${PHOTOS}/foil-bright.jpg`,
+    width: 1600,
+    height: 1067,
     alt: "images.householdRoll",
     altFallback: "EchoFoil household aluminium foil roll",
   },
   catering: {
-    src: `${PLACEHOLDER}/foil-roll-catering.svg`,
-    width: 800,
-    height: 800,
+    src: `${PHOTOS}/grill-trays.jpg`,
+    width: 1600,
+    height: 1067,
     alt: "images.cateringRoll",
     altFallback: "EchoFoil catering aluminium foil roll",
   },
   wholesale: {
-    src: `${PLACEHOLDER}/foil-roll-bulk.svg`,
-    width: 800,
-    height: 800,
+    src: `${PHOTOS}/covered-tray.jpg`,
+    width: 1600,
+    height: 1059,
     alt: "images.bulkRoll",
     altFallback: "EchoFoil bulk aluminium foil roll for wholesale",
   },
   trays: {
-    src: `${PLACEHOLDER}/foil-tray.svg`,
-    width: 800,
-    height: 800,
+    src: `${PHOTOS}/meal-trays.jpg`,
+    width: 1600,
+    height: 1067,
     alt: "images.tray",
     altFallback: "EchoFoil aluminium foil takeaway tray",
   },
   sheets: {
-    src: `${PLACEHOLDER}/foil-sheets.svg`,
-    width: 800,
-    height: 800,
+    src: `${PHOTOS}/foil-bright.jpg`,
+    width: 1600,
+    height: 1067,
     alt: "images.sheets",
     altFallback: "EchoFoil pre-cut aluminium foil sheets",
   },
   bakingPaper: {
-    src: `${PLACEHOLDER}/baking-paper.svg`,
-    width: 800,
-    height: 800,
+    src: `${PHOTOS}/baking-paper.jpg`,
+    width: 1600,
+    height: 2400,
     alt: "images.bakingPaper",
     altFallback: "EchoFoil greaseproof baking paper roll",
+  },
+  householdAlt: {
+    src: `${PHOTOS}/foil-dark.jpg`,
+    width: 2400,
+    height: 1600,
+    alt: "images.householdRoll",
+    altFallback: "Close-up of crumpled aluminium foil",
+  },
+  traysAlt: {
+    src: `${PHOTOS}/meal-trays-2.jpg`,
+    width: 1600,
+    height: 1067,
+    alt: "images.tray",
+    altFallback: "Aluminium foil containers with a prepared meal",
+  },
+  bakingAlt: {
+    src: `${PHOTOS}/dough-baking-paper.jpg`,
+    width: 1600,
+    height: 1067,
+    alt: "images.bakingPaper",
+    altFallback: "Dough balls on baking paper",
   },
 } as const satisfies Record<string, ManagedImage>;
 

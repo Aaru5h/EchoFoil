@@ -19,7 +19,9 @@ export const siteConfig = {
   domain: "echofoil.com",
   currency: "EUR",
   /** Locale used purely for number/price formatting per app locale. */
-  numberLocale: { sq: "sq-AL", en: "en-IE" } as Record<Locale, string>,
+  // ponytail: fr-FR renders prices like Albanian ("2,40 €") but ships in every ICU build;
+  // browsers without sq data fell back to "€2.40" and broke hydration.
+  numberLocale: { sq: "fr-FR", en: "en-IE" } as Record<Locale, string>,
   /** Orders at or above this subtotal ship free. Overridable in admin settings. */
   freeShippingThreshold: 50,
   /** Flat shipping fee below the threshold. Overridable in admin settings. */

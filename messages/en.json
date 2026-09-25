@@ -24,16 +24,16 @@
   "skip": "Skip to content",
   "announcement": "A little extra care, delivered. Free shipping on orders €50+.",
   "dismiss": "Dismiss announcement",
-  "heroTitle": "Good things deserve a better wrap.",
-  "heroText": "From the first prep to the last plate. Aluminium foil, trays and kitchen essentials for homes and businesses across Kosovo and Albania.",
-  "shopNow": "Find your everyday essentials",
-  "requestQuote": "Request a wholesale quote",
+  "heroTitle": "Aluminium foil, trays and baking paper for Kosovo and Albania",
+  "heroText": "Household rolls, catering widths, foil containers and baking paper. Every product listed with its width, length and thickness, sold by the piece or by the case.",
+  "shopNow": "Shop foil and trays",
+  "requestQuote": "Request a business quote",
   "heroCaption": "Simple materials. So many possibilities.",
   "delivery": "Delivery in Kosovo & Albania",
   "bulk": "More rolls. Better value.",
   "paymentTrust": "Pay on delivery or by bank transfer",
   "categoriesTitle": "A place in every kitchen.",
-  "featuredTitle": "Ready for your next recipe.",
+  "featuredTitle": "Most chosen",
   "viewAll": "Explore all products",
   "whyTitle": "The details make the difference.",
   "whyText": "The right width. The right length. The right amount of support for your daily routine.",
@@ -238,7 +238,7 @@
   "aboutText": "EchoFoil brings aluminium foil and practical packaging essentials to home and professional kitchens in Kosovo and Albania. We focus on clear specifications, useful formats and straightforward ordering.",
   "sustainability": "Use well. Waste less.",
   "sustainabilityText": "Choose the size you need and avoid unnecessary offcuts. Check your local collection rules for clean aluminium; recycling availability varies. We do not make certification or recyclability claims beyond the information confirmed for each product.",
-  "contactText": "Tell us what you need, and our team will get back to you.",
+  "contactText": "Questions about a size, a delivery or a larger order. Write to us and a person replies.",
   "businessPending": "Business contact details are being confirmed. Please use the contact form once the store is connected.",
   "legalDraft": "Draft policy: the business owner must confirm legal identity, contact details and applicable terms before launch.",
   "required": "Please complete this field.",
@@ -320,11 +320,62 @@
     ]
   },
   "images": {
-    "householdRoll": "Household aluminium foil roll",
-    "cateringRoll": "Professional catering foil roll",
-    "bulkRoll": "Bulk aluminium foil roll",
-    "tray": "Aluminium foil tray",
-    "sheets": "Pre-cut foil sheets",
-    "bakingPaper": "Baking paper roll"
-  }
+    "householdRoll": "Close-up of aluminium foil",
+    "cateringRoll": "Food cooking on aluminium foil trays",
+    "bulkRoll": "A tray of food covered with aluminium foil",
+    "tray": "Aluminium foil containers with a prepared meal",
+    "sheets": "Aluminium foil sheets",
+    "bakingPaper": "Pastries on baking paper"
+  },
+  "rangeTitle": "Product range",
+  "rangeText": "Four product families for home kitchens, restaurants, bakeries and caterers.",
+  "viewRange": "View range",
+  "widthShort": "Width",
+  "lengthShort": "Length",
+  "thicknessShort": "Thickness",
+  "finderTitle": "Find the right thickness",
+  "finderText": "Every foil we sell, placed on one scale by thickness in microns. Choose what you are cooking for and we will suggest where to start.",
+  "finderLight": "Lighter wrap",
+  "finderHeavy": "Heavier duty",
+  "finderScale": "Foil products by thickness in microns",
+  "processTitle": "How aluminium foil is made",
+  "processText": "Every roll of aluminium foil travels the same path before it reaches a kitchen drawer or a restaurant pass.",
+  "businessTitle": "For restaurants, bakeries, caterers and shops",
+  "businessText": "Buy by the case at volume prices, or send your monthly quantities and delivery location and we will reply with a written quote.",
+  "tiersTitle": "Volume pricing on every product",
+  "tierUnits": "{qty}+ units",
+  "tierOff": "{pct}% off",
+  "tierBase": "Listed price",
+  "contactTitle": "Tell us what you need",
+  "guidesTitle": "Guides",
+  "faqTitle": "Questions",
+  "process": [
+    {
+      "title": "Casting",
+      "text": "Molten aluminium is cast into thick slabs or continuous strip."
+    },
+    {
+      "title": "Rolling",
+      "text": "The strip passes through rolling mills again and again until it is thinner than a hair."
+    },
+    {
+      "title": "Annealing",
+      "text": "Heat treatment softens the foil so it folds and shapes cleanly."
+    },
+    {
+      "title": "Slitting",
+      "text": "Wide mill rolls are cut to width and rewound onto cores at set lengths."
+    },
+    {
+      "title": "Packing",
+      "text": "Rolls, trays and sheets are boxed and labelled with their specifications."
+    },
+    {
+      "title": "Delivery",
+      "text": "EchoFoil delivers to homes and businesses across Kosovo and Albania."
+    }
+  ],
+  "productsLabel": "Products",
+  "product": "Product",
+  "addShort": "Add"
 }

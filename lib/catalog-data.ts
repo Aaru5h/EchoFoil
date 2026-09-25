@@ -202,6 +202,12 @@ const rows: [string, string, string, string, string, number, number, number, num
     0,
   ],
 ];
+const photoKeys: Record<string, string[]> = {
+  household: ["household", "householdAlt"],
+  professional: ["catering", "wholesale"],
+  trays: ["trays", "traysAlt"],
+  baking: ["bakingPaper", "sheets", "bakingAlt"],
+};
 export const demoProducts: CatalogProduct[] = rows.map(
   ([slug, slugSq, en, sq, categoryId, price, width, length, thicknessMicrons], i) => ({
     id: `product-${i + 1}`,
@@ -221,22 +227,8 @@ export const demoProducts: CatalogProduct[] = rows.map(
           "Përgatitje, gatim dhe ruajtje praktike për kuzhina shtëpiake dhe profesionale. Zgjidhni madhësinë që i përshtatet rutinës suaj. Ndiqni udhëzimet e pajisjes dhe paketimit për përdorim të sigurt.",
       },
     },
-    images: [
-      {
-        src:
-          categoryId === "professional"
-            ? i === 5
-              ? "wholesale"
-              : "catering"
-            : categoryId === "trays"
-              ? "trays"
-              : categoryId === "baking"
-                ? i === 10
-                  ? "sheets"
-                  : "bakingPaper"
-                : "household",
-      },
-    ],
+    // Rotate through each category's photos so neighbouring cards don't repeat.
+    images: [{ src: photoKeys[categoryId][i % photoKeys[categoryId].length] }],
     variants: [
       {
         id: `variant-${i + 1}`,
