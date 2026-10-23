@@ -2,9 +2,19 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { rateLimit } from "./ratelimit";
 export async function protectRequest(req: Request, action: string) {
+  const site = req.headers.get("sec-fetch-site");
+  if (site === "cross-site") throw new Error("FORBIDDEN");
   const origin = req.headers.get("origin");
   const expected = process.env.NEXT_PUBLIC_SITE_URL || new URL(req.url).origin;
-  if (origin && new URL(origin).origin !== new URL(expected).origin) throw new Error("FORBIDDEN");
+  if (origin) {
+    let actual: string;
+    try {
+      actual = new URL(origin).origin;
+    } catch {
+      throw new Error("FORBIDDEN");
+    }
+    if (actual !== new URL(expected).origin) throw new Error("FORBIDDEN");
+  }
   if (Number(req.headers.get("content-length") || 0) > 2_000_000)
     throw new Error("INVALID_REQUEST");
   await rateLimit(

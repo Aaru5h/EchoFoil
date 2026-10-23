@@ -26,6 +26,7 @@ export async function POST(req: Request) {
       .toBuffer();
     const blob = await put(`products/${randomUUID()}.webp`, buffer, {
       access: "public",
+      token: process.env.BLOB_READ_WRITE_TOKEN,
       contentType: "image/webp",
       addRandomSuffix: true,
     });
@@ -38,7 +39,9 @@ export async function GET() {
   try {
     await apiAdmin();
     if (!process.env.BLOB_READ_WRITE_TOKEN) throw new Error("SERVICE_UNAVAILABLE");
-    return NextResponse.json(await list({ prefix: "products/", limit: 100 }));
+    return NextResponse.json(
+      await list({ prefix: "products/", limit: 100, token: process.env.BLOB_READ_WRITE_TOKEN }),
+    );
   } catch (e) {
     return apiError(e);
   }
@@ -53,7 +56,8 @@ export async function DELETE(req: Request) {
       !/^https:\/\/[^/]+\.public\.blob\.vercel-storage\.com\/products\//.test(url)
     )
       throw new Error("INVALID_REQUEST");
-    await del(url);
+    if (!process.env.BLOB_READ_WRITE_TOKEN) throw new Error("SERVICE_UNAVAILABLE");
+    await del(url, { token: process.env.BLOB_READ_WRITE_TOKEN });
     return NextResponse.json({ ok: true });
   } catch (e) {
     return apiError(e);

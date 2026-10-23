@@ -39,9 +39,8 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
   const guidePhotos = [photos.meal, photos.dough];
   return (
     <main id="main">
-      <section className="hero">
-        <Image src={photos.heroFoil} alt="" fill priority sizes="100vw" className="hero-photo" />
-        <div className="container hero-copy">
+      <section className="hero container">
+        <div className="hero-copy">
           <h1>{m.heroTitle}</h1>
           <p>{m.heroText}</p>
           <div className="hero-actions">
@@ -49,10 +48,28 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
               {m.shopNow}
               <ArrowRight size={18} />
             </Link>
-            <Link className="btn on-dark" href="/wholesale">
+            <Link className="btn secondary" href="/wholesale">
               {m.requestQuote}
             </Link>
           </div>
+          <nav className="hero-ranges" aria-label={m.rangeTitle}>
+            {categories.map((c) => (
+              <Link key={c.id} href={`/shop/${locale === "sq" ? c.slugSq : c.slug}`}>
+                {c.translations[locale].name}
+                <ArrowUpRight size={14} aria-hidden="true" />
+              </Link>
+            ))}
+          </nav>
+        </div>
+        <div className="hero-media">
+          <Image
+            src={photos.heroFoil}
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 800px) 100vw, 45vw"
+            className="hero-photo"
+          />
         </div>
       </section>
       <ul className="facts container">
@@ -84,7 +101,7 @@ export default async function Home({ params }: { params: Promise<{ locale: Local
                       src={resolveImage(c.image)}
                       alt=""
                       fill
-                      sizes="(max-width: 600px) 50vw, 25vw"
+                      sizes="(max-width: 1100px) 50vw, 25vw"
                     />
                   </div>
                   <h3>

@@ -59,7 +59,6 @@ export function Shell({
   const router = useRouter();
   const [nav, setNav] = useState(false);
   const [search, setSearch] = useState(false);
-  const [progress, setProgress] = useState(0);
   const [compact, setCompact] = useState(false);
   const other = locale === "sq" ? "en" : "sq";
   let otherPath = pathname.replace(/^\/(en|sq)/, `/${other}`);
@@ -74,8 +73,6 @@ export function Shell({
   useEffect(() => {
     setMounted(true);
     const scroll = () => {
-      const h = document.documentElement.scrollHeight - innerHeight;
-      setProgress(h ? (scrollY / h) * 100 : 0);
       setCompact(scrollY > 40);
     };
     scroll();
@@ -97,7 +94,6 @@ export function Shell({
       <a className="skip" href="#main">
         {t("skip")}
       </a>
-      <div className="scroll-progress" style={{ width: `${progress}%` }} />
       <div className="utility">
         <div className="container utility-inner">
           <span className="row hide-small">
